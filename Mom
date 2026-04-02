@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EdiGPT – Chat Like ChatGPT</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+    .chat-container {
+      margin-top: 40px;
+      width: 400px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-history {
+      background: #f1f2f6;
+      height: 340px;
+      overflow-y: auto;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 18px;
+      font-size: 15px;
+    }
+    .msg {
+      margin: 8px 0;
+      max-width: 80%;
+      padding: 9px 13px;
+      border-radius: 22px;
+      clear: both;
+    }
+    .msg.user {
+      background: #4aa6eb;
+      color: #fff;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+    .msg.edigpt {
+      background: #ecf0f1;
+      color: #343a40;
+      align-self: flex-start;
+      margin-right: auto;
+    }
+    form {
+      display: flex;
+      gap: 8px;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 11px;
+      border-radius: 20px;
+      border: 1px solid #dcdde1;
+      font-size: 15px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    input[type="text"]:focus {
+      border-color: #4aa6eb;
+    }
+    button {
+      padding: 0 22px;
+      border: none;
+      border-radius: 20px;
+      background: #4aa6eb;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #0975ab;
+    }
+    h2 {
+      text-align: center;
+      letter-spacing: 1px;
+      color: #1e2d4b;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <h2>EdiGPT Chat</h2>
+    <div class="chat-history" id="chat-history">
+      <div class="msg edigpt">Hi! I’m <b>EdiGPT</b>. How can I help you today?</div>
+    </div>
+    <form id="chat-form" autocomplete="off">
+      <input type="text" id="user-input" placeholder="Type your message..." required autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <script>
+    const chatHistory = document.getElementById('chat-history');
+    const chatForm = document.getElementById('chat-form');
+    const userInput = document.getElementById('user-input');
+
+    chatForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const msg = userInput.value.trim();
+      if (!msg) return;
+      appendMessage('user', msg);
+      userInput.value = '';
+
+      // Simulate AI response (echo with EdiGPT personality)
+      setTimeout(() => {
+        const aiResponse = generateEdiGPTReply(msg);
+        appendMessage('edigpt', aiResponse);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      }, 500);
+    });
+
+    function appendMessage(sender, text) {
+      const div = document.createElement('div');
+      div.classList.add('msg', sender);
+      div.innerHTML = (sender === 'edigpt' ? '<b>EdiGPT:</b> ' : '<b>You:</b> ') + text;
+      chatHistory.appendChild(div);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+
+    function generateEdiGPTReply(userMsg) {
+      // Replace this logic with a real AI integration for actual intelligence!
+      // Here is a simple echo with style:
+      const replies = [
+        `You said: "${userMsg}" – interesting!`,
+        `Here's my take: ${userMsg}`,
+        `Thanks for sharing! "${userMsg}" sounds great.`,
+        `I'm here to help, you said: ${userMsg}`,
+        `EdiGPT echoes: ${userMsg}`,
+      ];
+      // Simple random reply selection for variety
+      return replies[Math.floor(Math.random() * replies.length)];
+    }
+  </script>
+</body>
+</html>
